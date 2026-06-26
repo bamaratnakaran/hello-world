@@ -1,76 +1,153 @@
 <!DOCTYPE html>
 <html>
+
 <body>
 
 <div id="login">
+    <h2>Enter Password</h2>
+
     <input type="password" id="pwd">
-    <button onclick="check()">Enter</button>
+
+    <button onclick="check()">
+        Enter
+    </button>
 </div>
+
 
 <div id="site" style="display:none;">
-    <h1>Welcome Boy!!!</h1>
 
-    <div id="chat"
-         style="border:1px solid black;
-                height:250px;
-                overflow:auto;
-                padding:10px;
-                margin-bottom:10px;">
-    </div>
+<h1>Welcome Boy!!!</h1>
 
-    <input type="text" id="msg" placeholder="Type message">
-    <button onclick="send()">Send</button>
+<div id="chat"
+style="
+border:1px solid black;
+height:300px;
+overflow-y:auto;
+padding:10px;
+margin-bottom:15px;
+">
+
 </div>
+
+
+<textarea
+id="msg"
+
+placeholder="Type your message here..."
+
+style="
+width:95%;
+height:150px;
+font-size:16px;
+padding:10px;
+">
+</textarea>
+
+<br><br>
+
+<button onclick="send()">
+Send
+</button>
+
+</div>
+
 
 <script>
 
 function check(){
-    if(document.getElementById("pwd").value==="2010"){
-        document.getElementById("login").style.display="none";
-        document.getElementById("site").style.display="block";
-        loadChat();
-    } else {
-        alert("Wrong password");
-    }
+
+if(document.getElementById("pwd").value==="2010"){
+
+document.getElementById("login").style.display="none";
+
+document.getElementById("site").style.display="block";
+
+loadChat();
+
 }
+else{
+
+alert("Wrong password");
+
+}
+
+}
+
+
 
 function send(){
-    let text=document.getElementById("msg").value;
 
-    if(text==="") return;
+let text=
+document.getElementById("msg").value.trim();
 
-    let chats=
-        JSON.parse(localStorage.getItem("chat")) || [];
+if(text==="") return;
 
-    chats.push(text);
 
-    localStorage.setItem(
-        "chat",
-        JSON.stringify(chats)
-    );
+let chats=
+JSON.parse(
+localStorage.getItem("chat")
+) || [];
 
-    document.getElementById("msg").value="";
 
-    loadChat();
+chats.push(text);
+
+
+localStorage.setItem(
+"chat",
+JSON.stringify(chats)
+);
+
+
+document.getElementById("msg").value="";
+
+
+loadChat();
+
 }
+
+
 
 function loadChat(){
 
-    let chats=
-        JSON.parse(localStorage.getItem("chat")) || [];
+let chats=
+JSON.parse(
+localStorage.getItem("chat")
+) || [];
 
-    let box=document.getElementById("chat");
 
-    box.innerHTML="";
+let box=
+document.getElementById("chat");
 
-    chats.forEach(function(m){
-        box.innerHTML += "<p>"+m+"</p>";
-    });
 
-    box.scrollTop=box.scrollHeight;
+box.innerHTML="";
+
+
+chats.forEach(function(message){
+
+box.innerHTML +=
+`
+<div style="
+margin-bottom:10px;
+padding:10px;
+background:#f2f2f2;
+border-radius:10px;
+">
+
+${message.replace(/\n/g,"<br>")}
+
+</div>
+`;
+
+});
+
+
+box.scrollTop=
+box.scrollHeight;
+
 }
 
 </script>
 
 </body>
+
 </html>
