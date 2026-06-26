@@ -4,3 +4,30 @@
 <h1>Hello World</h1>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="login">
+  <input type="password" id="pwd">
+  <button onclick="check()">Enter</button>
+</div>
+
+<div id="site" style="display:none;">
+  <h1>Welcome </h1>
+</div>
+
+<script>
+function check(){
+  if(document.getElementById("pwd").value==="2010"){
+      document.getElementById("login").style.display="none";
+      document.getElementById("site").style.display="block";
+  } else {
+      alert("Wrong password");
+  }
+}
+</script>
+
+</body>
+</html>
