@@ -3,23 +3,73 @@
 <body>
 
 <div id="login">
-  <input type="password" id="pwd">
-  <button onclick="check()">Enter</button>
+    <input type="password" id="pwd">
+    <button onclick="check()">Enter</button>
 </div>
 
 <div id="site" style="display:none;">
-  <h1>Welcome Boy!!!</h1>
+    <h1>Welcome Boy!!!</h1>
+
+    <div id="chat"
+         style="border:1px solid black;
+                height:250px;
+                overflow:auto;
+                padding:10px;
+                margin-bottom:10px;">
+    </div>
+
+    <input type="text" id="msg" placeholder="Type message">
+    <button onclick="send()">Send</button>
 </div>
 
 <script>
+
 function check(){
-  if(document.getElementById("pwd").value==="2010"){
-      document.getElementById("login").style.display="none";
-      document.getElementById("site").style.display="block";
-  } else {
-      alert("Wrong password");
-  }
+    if(document.getElementById("pwd").value==="2010"){
+        document.getElementById("login").style.display="none";
+        document.getElementById("site").style.display="block";
+        loadChat();
+    } else {
+        alert("Wrong password");
+    }
 }
+
+function send(){
+    let text=document.getElementById("msg").value;
+
+    if(text==="") return;
+
+    let chats=
+        JSON.parse(localStorage.getItem("chat")) || [];
+
+    chats.push(text);
+
+    localStorage.setItem(
+        "chat",
+        JSON.stringify(chats)
+    );
+
+    document.getElementById("msg").value="";
+
+    loadChat();
+}
+
+function loadChat(){
+
+    let chats=
+        JSON.parse(localStorage.getItem("chat")) || [];
+
+    let box=document.getElementById("chat");
+
+    box.innerHTML="";
+
+    chats.forEach(function(m){
+        box.innerHTML += "<p>"+m+"</p>";
+    });
+
+    box.scrollTop=box.scrollHeight;
+}
+
 </script>
 
 </body>
