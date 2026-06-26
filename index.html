@@ -114,18 +114,15 @@ JSON.parse(
 localStorage.getItem("chat")
 ) || [];
 
-
 let box=
 document.getElementById("chat");
 
-
 box.innerHTML="";
 
+chats.forEach(function(message,index){
 
-chats.forEach(function(message){
+box.innerHTML += `
 
-box.innerHTML +=
-`
 <div style="
 margin-bottom:10px;
 padding:10px;
@@ -135,16 +132,53 @@ border-radius:10px;
 
 ${message.replace(/\n/g,"<br>")}
 
+<br><br>
+
+<button onclick="editMsg(${index})">
+Edit
+</button>
+
 </div>
+
 `;
 
 });
-
 
 box.scrollTop=
 box.scrollHeight;
 
 }
+
+
+
+function editMsg(index){
+
+let chats=
+JSON.parse(
+localStorage.getItem("chat")
+);
+
+let updated=
+prompt(
+"Edit your message",
+chats[index]
+);
+
+if(updated!==null){
+
+chats[index]=updated;
+
+localStorage.setItem(
+"chat",
+JSON.stringify(chats)
+);
+
+loadChat();
+
+}
+
+}
+
 
 </script>
 
